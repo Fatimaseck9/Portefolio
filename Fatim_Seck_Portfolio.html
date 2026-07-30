@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio de Fatim Seck, développeuse mobile et full-stack à Dakar.">
+  <meta name="theme-color" content="#07111f">
+  <title>Fatim Seck — Développeuse Mobile & Full-Stack · Compétences DevOps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #07111f;
+      --night-soft: #0d1b2f;
+      --surface: #111f34;
+      --white: #f7fbff;
+      --muted: #9eb0c7;
+      --cyan: #45e6d0;
+      --blue: #4f7cff;
+      --orange: #ff8a4c;
+      --purple: #aa78ff;
+      --line: rgba(255, 255, 255, .11);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      background: var(--night);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    ::selection { color: var(--night); background: var(--cyan); }
+    .container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .scroll-progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 100;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--orange));
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 90;
+      transition: background .3s ease, border-color .3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(7, 17, 31, .82);
+      backdrop-filter: blur(18px);
+      border-color: var(--line);
+    }
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font: 800 1.2rem "Manrope", sans-serif;
+      letter-spacing: -.04em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      color: var(--night);
+      background: var(--cyan);
+      border-radius: 11px 4px 11px 4px;
+      box-shadow: 0 0 24px rgba(69, 230, 208, .25);
+    }
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: .92rem; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta {
+      padding: 10px 18px;
+      color: var(--white) !important;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .nav-cta:hover { border-color: var(--cyan); }
+    .menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      color: var(--white);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 130px 0 80px;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      border-radius: 50%;
+      filter: blur(5px);
+    }
+    .hero::before {
+      width: 520px;
+      height: 520px;
+      right: -170px;
+      top: -140px;
+      background: radial-gradient(circle, rgba(79, 124, 255, .25), transparent 68%);
+    }
+    .hero::after {
+      width: 440px;
+      height: 440px;
+      left: -180px;
+      bottom: -180px;
+      background: radial-gradient(circle, rgba(69, 230, 208, .14), transparent 68%);
+    }
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      opacity: .28;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
+    }
+    .hero-layout { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; gap: 70px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 24px;
+      color: var(--cyan);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(69, 230, 208, .11);
+      animation: pulse 2s infinite;
+    }
+    h1, h2, h3 { font-family: "Manrope", sans-serif; line-height: 1.1; }
+    .hero h1 { max-width: 820px; font-size: clamp(3.3rem, 7.5vw, 7.2rem); letter-spacing: -.065em; }
+    .outline-word {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(247, 251, 255, .62);
+    }
+    .gradient-word {
+      background: linear-gradient(100deg, var(--cyan), #73a4ff 52%, var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-copy { max-width: 660px; margin-top: 30px; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.22rem); }
+    .hero-copy strong { color: var(--white); font-weight: 500; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+    .button:hover { transform: translateY(-3px); }
+    .button-primary {
+      color: var(--night);
+      background: var(--cyan);
+      box-shadow: 0 12px 30px rgba(69, 230, 208, .16);
+    }
+    .button-primary:hover { box-shadow: 0 16px 36px rgba(69, 230, 208, .28); }
+    .button-secondary { color: var(--white); border: 1px solid var(--line); background: rgba(255,255,255,.03); }
+    .button-secondary:hover { border-color: rgba(255,255,255,.35); }
+    .hero-card {
+      position: relative;
+      padding: 10px;
+      background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 30px 80px rgba(0,0,0,.28);
+      transform: rotate(2deg);
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(140deg, rgba(69,230,208,.55), transparent 35%, rgba(170,120,255,.38));
+      opacity: .55;
+    }
+    .portrait-wrap {
+      position: relative;
+      aspect-ratio: .87;
+      overflow: hidden;
+      border-radius: 20px;
+      background: var(--surface);
+    }
+    .portrait-wrap img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center top;
+      filter: saturate(.92) contrast(1.03);
+    }
+    .portrait-badge {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      padding: 13px 15px;
+      color: var(--white);
+      background: rgba(7, 17, 31, .78);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 13px;
+      backdrop-filter: blur(12px);
+    }
+    .portrait-badge strong { display: block; font: 700 .95rem "Manrope"; }
+    .portrait-badge span { color: var(--cyan); font-size: .76rem; }
+
+    /* Shared sections */
+    section { position: relative; padding: 120px 0; }
+    .section-top { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 54px; }
+    .kicker { color: var(--cyan); font-size: .78rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .section-title { max-width: 700px; margin-top: 13px; font-size: clamp(2.2rem, 5vw, 4.2rem); letter-spacing: -.045em; }
+    .section-note { max-width: 350px; color: var(--muted); }
+
+    /* Projects */
+    #projets { background: #091525; }
+    .projects-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px; }
+    .project-card {
+      position: relative;
+      grid-column: span 6;
+      min-height: 430px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--surface);
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+    .project-card:first-child { grid-column: span 7; }
+    .project-card:nth-child(2) { grid-column: span 5; }
+    .project-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(69, 230, 208, .4);
+      box-shadow: 0 28px 60px rgba(0,0,0,.25);
+    }
+    .project-number { color: rgba(255,255,255,.26); font: 700 .78rem "Manrope"; letter-spacing: .15em; }
+    .project-icon {
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      width: 150px;
+      height: 150px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(69, 230, 208, .08);
+      color: var(--cyan);
+      transform: rotate(-10deg);
+    }
+    .project-icon svg { width: 62px; height: 62px; }
+    .project-card:nth-child(2) .project-icon { color: var(--orange); background: rgba(255,138,76,.09); }
+    .project-card:nth-child(3) .project-icon { color: var(--purple); background: rgba(170,120,255,.09); }
+    .project-card:nth-child(4) .project-icon { color: var(--blue); background: rgba(79,124,255,.10); }
+    .project-content { margin-top: auto; position: relative; z-index: 2; }
+    .project-card h3 { margin-bottom: 7px; font-size: clamp(1.7rem, 3vw, 2.5rem); letter-spacing: -.04em; }
+    .project-subtitle { margin-bottom: 17px; color: var(--cyan); font-weight: 600; }
+    .project-card p:not(.project-number):not(.project-subtitle) { max-width: 650px; color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0; }
+    .tag {
+      padding: 7px 11px;
+      color: #cbd7e8;
+      font-size: .72rem;
+      font-weight: 600;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .project-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 700;
+      font-size: .9rem;
+      transition: gap .2s, color .2s;
+    }
+    .text-link:hover { gap: 11px; color: var(--cyan); }
+    .internal-badge { display: inline-flex; color: var(--muted); font-size: .84rem; }
+
+    /* Experience */
+    #experience { background: var(--night); }
+    .experience-layout { display: grid; grid-template-columns: 1.25fr .75fr; gap: 70px; align-items: start; }
+    .timeline { position: relative; margin-top: 55px; padding-left: 32px; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(var(--cyan), var(--purple), transparent);
+    }
+    .timeline-item { position: relative; padding: 0 0 48px 20px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -32px;
+      top: 7px;
+      width: 11px;
+      height: 11px;
+      background: var(--night);
+      border: 2px solid var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(69,230,208,.09);
+    }
+    .timeline-date { color: var(--cyan); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .timeline-item h3 { margin: 7px 0 4px; font-size: 1.35rem; }
+    .timeline-company { margin-bottom: 13px; color: #c7d5e6; font-weight: 600; }
+    .timeline-item > p:last-child { color: var(--muted); }
+    .career-side { display: grid; gap: 18px; }
+    .info-card {
+      padding: 27px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+    .info-card h3 { margin-bottom: 21px; color: var(--cyan); font-size: .78rem; letter-spacing: .13em; text-transform: uppercase; }
+    .education-item + .education-item { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .education-item strong { display: block; font: 700 .95rem/1.4 "Manrope"; }
+    .education-item span { display: block; margin-top: 5px; color: var(--muted); font-size: .8rem; }
+    .certificates { display: flex; flex-wrap: wrap; gap: 8px; }
+    .certificate { padding: 8px 11px; color: #dce7f4; background: rgba(79,124,255,.1); border: 1px solid rgba(79,124,255,.22); border-radius: 8px; font-size: .78rem; }
+    .language + .language { margin-top: 15px; }
+    .language { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .language strong { font-size: .9rem; }
+    .language span { color: var(--muted); font-size: .78rem; }
+
+    /* Skills */
+    .skills-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; align-items: start; }
+    .skill-intro { position: sticky; top: 120px; }
+    .skill-intro p { margin-top: 25px; color: var(--muted); }
+    .skill-groups { display: grid; gap: 18px; }
+    .skill-group {
+      padding: 28px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+    .skill-group h3 { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font-size: 1rem; }
+    .skill-group h3 span { width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+    .skill-group:nth-child(2) h3 span { background: var(--orange); box-shadow: 0 0 12px var(--orange); }
+    .skill-group:nth-child(3) h3 span { background: var(--purple); box-shadow: 0 0 12px var(--purple); }
+    .skill-group:nth-child(4) h3 span { background: var(--blue); box-shadow: 0 0 12px var(--blue); }
+    .skill-group:nth-child(5) h3 span { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; }
+    .skill-list li { padding: 8px 13px; color: var(--muted); background: var(--night); border-radius: 9px; font-size: .84rem; }
+
+    /* Other work */
+    #parcours { background: var(--white); color: var(--night); }
+    #parcours .kicker { color: #276a63; }
+    #parcours .section-note { color: #5e6d7e; }
+    .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+    .other-card {
+      min-height: 190px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid #dfe7ef;
+      border-radius: 19px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .other-card:hover { transform: translateY(-5px); border-color: #77cfc3; box-shadow: 0 18px 40px rgba(7,17,31,.08); }
+    .other-card span { color: #65778a; font-size: .83rem; }
+    .other-card h3 { font-size: 1.18rem; }
+    .other-card i { width: 30px; height: 3px; background: var(--cyan); border-radius: 10px; }
+
+    /* Contact */
+    .contact { padding-bottom: 50px; }
+    .contact-box {
+      position: relative;
+      padding: clamp(35px, 7vw, 80px);
+      overflow: hidden;
+      text-align: center;
+      background: linear-gradient(125deg, #102942, #12213b 52%, #251b43);
+      border: 1px solid var(--line);
+      border-radius: 34px;
+    }
+    .contact-box::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -130px;
+      top: -180px;
+      border-radius: 50%;
+      background: var(--orange);
+      filter: blur(110px);
+      opacity: .25;
+    }
+    .contact-box h2 { position: relative; max-width: 800px; margin: 12px auto 20px; font-size: clamp(2.2rem, 6vw, 4.8rem); letter-spacing: -.055em; }
+    .contact-box p { position: relative; color: var(--muted); }
+    .contact-box .actions { position: relative; justify-content: center; }
+    footer { padding: 25px 0 35px; color: var(--muted); font-size: .84rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding-top: 28px; }
+
+    /* Animation & accessibility */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 10px rgba(69,230,208,0); } }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+
+    @media (max-width: 900px) {
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-card { width: min(100%, 390px); justify-self: center; margin-top: 15px; }
+      .project-card, .project-card:first-child, .project-card:nth-child(2), .project-card:nth-child(n+5) { grid-column: span 12; }
+      .experience-layout { grid-template-columns: 1fr; gap: 55px; }
+      .skills-layout { grid-template-columns: 1fr; gap: 45px; }
+      .skill-intro { position: static; }
+      .other-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .container { width: min(calc(100% - 28px), var(--max)); }
+      .nav-links {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 70px;
+        padding: 22px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        background: rgba(13, 27, 47, .98);
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        transform: translateY(-15px);
+        opacity: 0;
+        visibility: hidden;
+        transition: .25s ease;
+      }
+      .nav-links.open { transform: none; opacity: 1; visibility: visible; }
+      .menu-button { display: grid; place-items: center; }
+      .hero { min-height: auto; padding-top: 150px; }
+      .hero h1 { font-size: clamp(3rem, 16vw, 5.2rem); }
+      section { padding: 85px 0; }
+      .section-top { display: block; }
+      .section-note { margin-top: 20px; }
+      .project-card { min-height: 410px; padding: 25px; }
+      .project-icon { width: 115px; height: 115px; }
+      .project-icon svg { width: 48px; }
+      .other-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="container nav-inner">
+      <a class="logo" href="#accueil" aria-label="Retour à l'accueil">
+        <span class="logo-mark">FS</span>
+        Fatim Seck
+      </a>
+      <button class="menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#experience">Expériences</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a class="nav-cta" href="#contact">Me contacter</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero" id="accueil">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="container hero-layout">
+      <div>
+        <p class="eyebrow"><span class="status-dot"></span>Disponible pour de nouveaux défis</p>
+        <h1>Je conçois des <span class="gradient-word">expériences</span> <span class="outline-word">digitales.</span></h1>
+        <p class="hero-copy">
+          Moi, c'est <strong>Fatim Seck</strong>, ingénieure en systèmes d'information répartis et développeuse Mobile &amp; Full-Stack avec des compétences DevOps, basée à Dakar.
+          Je transforme des besoins métier complexes en produits numériques <strong>fluides, utiles et fiables.</strong>
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="#projets">
+            Découvrir mes projets
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg>
+          </a>
+          <a class="button button-secondary" href="mailto:fatimseck54@gmail.com">Parlons de votre projet</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Portrait de Fatim Seck">
+        <div class="portrait-wrap">
+          <img src="fatim.jpg" alt="Portrait professionnel de Fatim Seck" width="945" height="1024">
+          <div class="portrait-badge">
+            <strong>Fatim Seck</strong>
+            <span>Mobile &amp; Full-Stack · Compétences DevOps</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section id="projets">
+      <div class="container">
+        <div class="section-top reveal">
+          <div>
+            <p class="kicker">Sélection de projets</p>
+            <h2 class="section-title">Des solutions qui ont un impact concret.</h2>
+          </div>
+          <p class="section-note">Du cadrage au déploiement, je construis des produits complets pensés pour leurs utilisateurs.</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <span class="project-number">01 — PRODUCTION</span>
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 17h16M6 17 8 7h8l2 10M9 10h6M12 7V3m-3 2 3-2 3 2"/></svg>
+            </div>
+            <div class="project-content">
+              <h3>Gaalgui</h3>
+              <p class="project-subtitle">Gestion des plaintes maritimes</p>
+              <p>Une plateforme métier qui permet aux marins de déposer leurs plaintes et aux équipes de l'ANAM de les traiter de bout en bout. Déployée et utilisée en production.</p>
+              <div class="tags"><span class="tag">Angular</span><span class="tag">NestJS</span><span class="tag">API REST</span><span class="tag">Déploiement Coolify</span></div>
+              <div class="project-links">
+                <a class="text-link" href="https://gaalgui.sn/" target="_blank" rel="noopener">Voir l'application <span>↗</span></a>
+                <a class="text-link" href="https://gaalgui.sn/login-admin" target="_blank" rel="noopener">Administration <span>↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-number">02 — FINTECH</span>
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12h14m-5-5 5 5-5 5M10 6H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5"/></svg>
+            </div>
+            <div class="project-content">
+              <h3>SendManda</h3>
+              <p class="project-subtitle">Transfert d'argent diaspora</p>
+              <p>Application mobile, API et interface d'administration pour sécuriser les transferts et le suivi des demandes KYC.</p>
+              <div class="tags"><span class="tag">Flutter</span><span class="tag">NestJS</span><span class="tag">Angular</span><span class="tag">KYC</span></div>
+              <a class="text-link" href="https://sendmanda.app/" target="_blank" rel="noopener">Explorer le site <span>↗</span></a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-number">03 — SÉCURITÉ</span>
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3 5 6v5c0 4.5 2.8 8.2 7 10 4.2-1.8 7-5.5 7-10V6l-7-3Z"/><path d="M9 12a3 3 0 1 1 6 0v3H9v-3Z"/></svg>
+            </div>
+            <div class="project-content">
+              <h3>CoffreBI</h3>
+              <p class="project-subtitle">Biométrie multiplateforme</p>
+              <p>Refonte UX/UI et intégration de l'authentification biométrique sur Android, iOS et desktop.</p>
+              <div class="tags"><span class="tag">Python</span><span class="tag">KivyMD</span><span class="tag">Flask</span><span class="tag">SQLAlchemy</span></div>
+              <a class="text-link" href="https://coffrebi.app/" target="_blank" rel="noopener">Découvrir CoffreBI <span>↗</span></a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-number">04 — WEB EXPERIENCE</span>
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>
+            </div>
+            <div class="project-content">
+              <h3>Cocytech</h3>
+              <p class="project-subtitle">Refonte du site vitrine</p>
+              <p>Nouvelle identité digitale enrichie de fonctionnalités de géolocalisation GeoIP et d'un espace de présentation technologique.</p>
+              <div class="tags"><span class="tag">HTML</span><span class="tag">Tailwind CSS</span><span class="tag">GeoIP</span></div>
+              <div class="project-links">
+                <a class="text-link" href="https://cocytech.com/" target="_blank" rel="noopener">Voir le site <span>↗</span></a>
+                <a class="text-link" href="https://cocytech.com/geolocalisation" target="_blank" rel="noopener">Géolocalisation <span>↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-number">05 — OUTIL MÉTIER ANAM</span>
+            <div class="project-content">
+              <h3>Enregistrement des unités de plaisance</h3>
+              <p class="project-subtitle">Digitalisation d'un processus administratif</p>
+              <p>Système interne pour l'enregistrement des unités de plaisance, engins nautiques et embarcations de transport. Conception d'API REST, développement métier et tests fonctionnels.</p>
+              <div class="tags"><span class="tag">Angular</span><span class="tag">NestJS</span><span class="tag">Tests fonctionnels</span></div>
+              <span class="internal-badge">Projet interne · Agence Nationale des Affaires Maritimes</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-number">06 — OUTIL COLLABORATIF ANAM</span>
+            <div class="project-content">
+              <h3>Gestion de support &amp; ticketing</h3>
+              <p class="project-subtitle">Centralisation des demandes d'assistance</p>
+              <p>Application interne conçue pour permettre aux collaborateurs de l'ANAM de créer, suivre et gérer leurs demandes de support. Elle centralise les tickets et facilite leur traitement par les équipes concernées.</p>
+              <div class="tags"><span class="tag">Angular</span><span class="tag">NestJS</span><span class="tag">API REST</span><span class="tag">Ticketing</span></div>
+              <span class="internal-badge">Projet interne · Agence Nationale des Affaires Maritimes</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container experience-layout">
+        <div>
+          <div class="reveal">
+            <p class="kicker">Expérience professionnelle</p>
+            <h2 class="section-title">Du terrain, des produits et des résultats.</h2>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item reveal">
+              <p class="timeline-date">Février — Juin 2026</p>
+              <h3>Développeuse Mobile &amp; Full-Stack</h3>
+              <p class="timeline-company">CoffreBI &amp; Cocytech</p>
+              <p>Refonte des expériences web de CoffreBI et Cocytech, conception du site SendManda et développement de son application mobile Flutter avec une API NestJS.</p>
+            </article>
+            <article class="timeline-item reveal">
+              <p class="timeline-date">Juillet — Décembre 2025</p>
+              <h3>Développeuse Full-Stack</h3>
+              <p class="timeline-company">Agence Nationale des Affaires Maritimes</p>
+              <p>Analyse et modélisation de processus métier, développement du système d'enregistrement des unités de plaisance et d'une application interne de support.</p>
+            </article>
+            <article class="timeline-item reveal">
+              <p class="timeline-date">Mai — Juin 2025</p>
+              <h3>Développeuse Full-Stack — Stage</h3>
+              <p class="timeline-company">Agence Nationale des Affaires Maritimes</p>
+              <p>Développement de Gaalgui avec Angular et NestJS, participation à l'analyse des besoins et déploiement sur Coolify avec gestion de la base de données et des mises à jour.</p>
+            </article>
+            <article class="timeline-item reveal">
+              <p class="timeline-date">Assurance qualité logicielle</p>
+              <h3>Testeuse fonctionnelle — Stage</h3>
+              <p class="timeline-company">Securaxe SARL</p>
+              <p>Exécution de scénarios de test sur une plateforme d'archivage, identification et suivi des anomalies, validation des correctifs avec l'équipe de développement.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="career-side">
+          <div class="info-card reveal">
+            <h3>Formation</h3>
+            <div class="education-item">
+              <strong>Master 2 — Systèmes d'information répartis</strong>
+              <span>Université Cheikh Anta Diop de Dakar · 2023–2024</span>
+            </div>
+            <div class="education-item">
+              <strong>Licence Informatique</strong>
+              <span>Université Cheikh Anta Diop de Dakar · 2021–2022</span>
+            </div>
+            <div class="education-item">
+              <strong>BTS — Informatique industrielle &amp; réseaux</strong>
+              <span>CFPT Sénégal/Japon · 2019–2021</span>
+            </div>
+          </div>
+          <div class="info-card reveal">
+            <h3>Certifications</h3>
+            <div class="certificates">
+              <span class="certificate">Développement Front-end</span>
+              <span class="certificate">Data Analysis</span>
+              <span class="certificate">Marketing digital</span>
+            </div>
+          </div>
+          <div class="info-card reveal">
+            <h3>Langues</h3>
+            <div class="language"><strong>Français</strong><span>Avancé</span></div>
+            <div class="language"><strong>Anglais</strong><span>Intermédiaire</span></div>
+            <div class="language"><strong>Wolof</strong><span>Langue maternelle</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="competences">
+      <div class="container skills-layout">
+        <div class="skill-intro reveal">
+          <p class="kicker">Expertise technique</p>
+          <h2 class="section-title">Une vision produit, une stack complète.</h2>
+          <p>Mobile, front-end, back-end et déploiement : j'aime comprendre tout le cycle de vie d'un produit pour prendre de meilleures décisions techniques.</p>
+        </div>
+        <div class="skill-groups">
+          <div class="skill-group reveal">
+            <h3><span></span>Interfaces &amp; Mobile</h3>
+            <ul class="skill-list"><li>Flutter</li><li>KivyMD</li><li>Angular</li><li>React</li><li>Next.js</li><li>HTML / CSS</li><li>Tailwind CSS</li><li>Figma</li></ul>
+          </div>
+          <div class="skill-group reveal">
+            <h3><span></span>Back-end &amp; Bases de données</h3>
+            <ul class="skill-list"><li>Node.js</li><li>NestJS</li><li>TypeScript</li><li>Python</li><li>PHP</li><li>Flask</li><li>Spring Boot</li><li>Hibernate</li><li>Laravel</li><li>PostgreSQL</li><li>SQL Server</li><li>MongoDB</li><li>SQLAlchemy</li></ul>
+          </div>
+          <div class="skill-group reveal">
+            <h3><span></span>Outils &amp; Méthodes</h3>
+            <ul class="skill-list"><li>Docker</li><li>Kubernetes</li><li>Déploiement Coolify</li><li>Git</li><li>GitHub</li><li>GitLab CI</li><li>Jenkins</li><li>SonarQube</li><li>SOAP UI</li><li>Jira</li><li>API REST</li><li>Agile / Scrum</li></ul>
+          </div>
+          <div class="skill-group reveal">
+            <h3><span></span>Data &amp; Business Intelligence</h3>
+            <ul class="skill-list"><li>Big Data</li><li>Business Intelligence</li><li>Power BI</li><li>Apache Spark</li><li>ETL</li><li>Data Mining</li><li>SSIS</li><li>Anaconda</li></ul>
+          </div>
+          <div class="skill-group reveal">
+            <h3><span></span>Systèmes &amp; Réseaux</h3>
+            <ul class="skill-list"><li>Administration Linux</li><li>Windows Server</li><li>DNS / DHCP / FTP / HTTP</li><li>Sécurité NIDS / HIDS</li><li>Diagnostic &amp; maintenance</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="parcours">
+      <div class="container">
+        <div class="section-top reveal">
+          <div>
+            <p class="kicker">Autres réalisations</p>
+            <h2 class="section-title">Toujours en train de construire.</h2>
+          </div>
+          <p class="section-note">Des projets académiques et clients pour explorer de nouvelles architectures et résoudre des besoins concrets.</p>
+        </div>
+        <div class="other-grid">
+          <article class="other-card reveal"><span>Laravel · API</span><h3>Takussan — Vide-dressing</h3><i></i></article>
+          <article class="other-card reveal"><span>Spring Boot · React</span><h3>Eco Shop</h3><i></i></article>
+          <article class="other-card reveal"><span>React · Node.js</span><h3>Gestion d'école</h3><i></i></article>
+          <article class="other-card reveal"><span>JEE · Hibernate</span><h3>Réservation de parking</h3><i></i></article>
+          <article class="other-card reveal"><span>Spring Boot · Thymeleaf</span><h3>Partage de ressources</h3><i></i></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-box reveal">
+          <p class="kicker">Un projet en tête ?</p>
+          <h2>Construisons quelque chose d'utile ensemble.</h2>
+          <p>Dakar, Sénégal · Disponible en télétravail et à l'international</p>
+          <div class="actions">
+            <a class="button button-primary" href="mailto:fatimseck54@gmail.com">fatimseck54@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Fatim Seck. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.querySelector('.nav');
+    const progress = document.querySelector('.scroll-progress');
+    const menuButton = document.querySelector('.menu-button');
+    const navLinks = document.querySelector('.nav-links');
+
+    function updateOnScroll() {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = `${scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0}%`;
+    }
+
+    window.addEventListener('scroll', updateOnScroll, { passive: true });
+    updateOnScroll();
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', isOpen);
+      menuButton.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
